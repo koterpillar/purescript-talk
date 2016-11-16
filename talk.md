@@ -4,12 +4,18 @@
 * Functional
 * Works nice in JavaScript ecosystem
 
-## Types
+---
+
+# Types
+
+???
 
 Types tell us a lot about what is and isn't valid in a given point in a
 program. They serve as tests and documentation.
 
-### Types in JavaScript
+---
+
+# Types in JavaScript
 
 ```
 > typeof(1)
@@ -20,7 +26,9 @@ program. They serve as tests and documentation.
 NaN
 ```
 
-### Types in Python
+---
+
+# Types in Python
 
 ```
 >>> type(1)
@@ -34,17 +42,23 @@ TypeError: unsupported operand type(s) for -: 'int' and 'str'
 >>> 
 ```
 
-### Type checkers
+---
+
+# Type checkers
 
 * Pylint
 * Mypy
 * Flow
 * TypeScript
 
+???
+
 Flow complains about `1 - "asdf"` but is fine with `+`.
 Pylint finds nothing wrong with `+` or `-`; Mypy complains.
 
-### Types of functions
+---
+
+# Types of functions
 
 ```
 function dbl(x) {
@@ -62,10 +76,14 @@ function first_matching(f, x) {
 }
 ```
 
+???
+
 The type of the functions is related to the acceptable types of parameters.
 `f` and `x` must be related to each other, otherwise an error will occur.
 
-### Complex types
+---
+
+# Complex types
 
 ```
 var user : {name: string, email: email} = {
@@ -83,17 +101,25 @@ if (user === 'ANONYMOUS') {
 }
 ```
 
+???
+
 Record types (objects in Python) are well supported by all checkers. There
 seems to be little support for sum types, and `null`, `undefined` and `None`
 are often overlooked.
 
-### Side effects
+---
+
+# Side effects
 
 ```
 function not(x: boolean): boolean { ... }
+```
 
+```
 function addUser(is_admin: boolean): boolean { ... }
 ```
+
+???
 
 There are only four meaningful functions with this signature. What it really
 means isn't limited to returning the result.
@@ -105,7 +131,9 @@ etc.
 Examples of side effects include accessing global variables, including objects
 in other modules, and throwing exceptions.
 
-## PureScript types
+---
+
+# PureScript types
 
 ```
 > :type 2
@@ -126,7 +154,9 @@ See https://github.com/purescript/purescript/wiki/Error-Code-TypesDoNotUnify
 for more information, or to contribute content related to this error.
 ```
 
-### Complex types
+---
+
+# Complex types
 
 ```
 > :type [1, 2, 4]
@@ -138,7 +168,9 @@ Could not match type Int with type Boolean
 { name :: String, friends :: Array String }
 ```
 
-### Functions and their types
+---
+
+# Functions and their types
 
 ```
 > let diagonal w h = sqrt (w * w + h * h)
@@ -149,11 +181,15 @@ Number -> Number -> Number
 5.0
 ```
 
+???
+
 Function calls don't need brackets or commas between arguments. Function types
 are types of all arguments and the return value, separated by `->` (thanks to
 currying).
 
-### More function types
+---
+
+# More function types
 
 ```
 > let both f x y = f x && f y
@@ -166,7 +202,9 @@ true
 false
 ```
 
-### Sum types
+---
+
+# Sum types
 
 ```
 data User = Anonymous | LoggedIn { name :: String, email :: String }
@@ -183,6 +221,8 @@ heading (LoggedIn user) = "Welcome, " <> user.name <> "!"
 Could not match type String with type User
 ```
 
+???
+
 Algebraic data types, or sum types, are like unions in C: they allow multiple
 distinct ways to construct a value of a type. Every function handling the `User`
 type _must_ declare what happens for _every_ constructor.
@@ -190,22 +230,30 @@ type _must_ declare what happens for _every_ constructor.
 The operations for concatenating strings and adding numbers are named
 differently.
 
-## JavaScript integration
+---
+
+# JavaScript integration
 
 * Install PureScript: `npm install purescript`
 * Install a library: `bower install --save purescript-react`
 * Webpack loader: `npm install purs-loader`
 
+???
+
 PureScript is written in Haskell, so if you already have a Haskell compiler,
 it's easy to build from source. However, it's available on the familiar NPM, and
 the libraries use Bower.
 
-### Calling JavaScript
+---
+
+# Calling JavaScript
 
 * PureScript compiles to CommonJS modules
 * PureScript can import JavaScript modules
 * The compiled code is readable JavaScript
 * Unused library code is eliminated
+
+???
 
 PureScript modules are compiled to CommonJS modules, with all functions
 transparently exported. The compiled code is very close to the source, and stays
