@@ -1,7 +1,7 @@
 # What is PureScript
 
-* Functional
 * Strongly typed
+* Functional
 * Works nice in JavaScript ecosystem
 
 ## Types
@@ -105,14 +105,63 @@ etc.
 Examples of side effects include accessing global variables, including objects
 in other modules, and throwing exceptions.
 
-## PureScript basics
+## PureScript types
 
 ```
-dbl x = x + x
+> :type 2
+Int
+> :type "asdf"
+String
+> :type ("asdf" + 3)
 
-first_matching f x =
-  if f (head x) then head x
-  else first_matching f (tail x)
+  Could not match type
+       
+    Int
+       
+  with type
+          
+    String
+
+See https://github.com/purescript/purescript/wiki/Error-Code-TypesDoNotUnify
+for more information, or to contribute content related to this error.
 ```
 
-The types are inferred.
+### Complex types
+
+```
+> :type [1, 2, 4]
+Array Int
+> :type [1, false]
+Could not match type Int with type Boolean
+> let author = { name: "Alice", friends: ["Bob", "Chipo"] }
+> :t author
+{ name :: String, friends :: Array String }
+```
+
+### Functions and their types
+
+```
+> let diagonal w h = sqrt (w * w + h * h)
+> :t diagonal
+Number -> Number -> Number
+
+> diagonal 3.0 4.0
+5.0
+```
+
+Function calls don't need brackets or commas between arguments. Function types
+are types of all arguments and the return value, separated by `->` (thanks to
+currying).
+
+### More function types
+
+```
+> let both f x y = f x && f y
+> :t both
+forall a. (a -> Boolean) -> a -> a -> Boolean
+
+> both (_ > 4) 5 6
+true
+> both (_ > 4) 2 6
+false
+```
