@@ -9,7 +9,7 @@
 Types tell us a lot about what is and isn't valid in a given point in a
 program. They serve as tests and documentation.
 
-### Types in Javascript
+### Types in JavaScript
 
 ```
 > typeof(1)
@@ -165,3 +165,49 @@ true
 > both (_ > 4) 2 6
 false
 ```
+
+### Sum types
+
+```
+data User = Anonymous | LoggedIn { name :: String, email :: String }
+
+heading Anonymous = "Welcome!"
+heading (LoggedIn user) = "Welcome, " <> user.name <> "!"
+```
+
+```
+> let alice = LoggedIn { name: "Alice", email: "alice@example.com" }
+> heading alice
+"Welcome, Alice!"
+> heading "Alice"
+Could not match type String with type User
+```
+
+Algebraic data types, or sum types, are like unions in C: they allow multiple
+distinct ways to construct a value of a type. Every function handling the `User`
+type _must_ declare what happens for _every_ constructor.
+
+The operations for concatenating strings and adding numbers are named
+differently.
+
+## JavaScript integration
+
+* Install PureScript: `npm install purescript`
+* Install a library: `bower install --save purescript-react`
+* Webpack loader: `npm install purs-loader`
+
+PureScript is written in Haskell, so if you already have a Haskell compiler,
+it's easy to build from source. However, it's available on the familiar NPM, and
+the libraries use Bower.
+
+### Calling JavaScript
+
+* PureScript compiles to CommonJS modules
+* PureScript can import JavaScript modules
+* The compiled code is readable JavaScript
+* Unused library code is eliminated
+
+PureScript modules are compiled to CommonJS modules, with all functions
+transparently exported. The compiled code is very close to the source, and stays
+readable. Thanks to static analysis made possible by purity, all unneeded
+functions are eliminated, resulting in no overhead for distributing PureScript.
