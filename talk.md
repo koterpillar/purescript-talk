@@ -389,5 +389,9 @@ Result a rest >>= f = f rest
 
 # Further reading
 
-* [http://www.purescript.org/](http://www.purescript.org/)
-* [https://leanpub.com/purescript/read](https://leanpub.com/purescript/read)
+* [PureScript](http://www.purescript.org/)
+* [Learn PureScript](https://leanpub.com/purescript/read)
+* [Elm](http://elm-lang.org)
+* [Railway Oriented Programming](http://fsharpforfunandprofit.com/rop/)
+
+Slides: [https://github.com/koterpillar/purescript-talk](https://github.com/koterpillar/purescript-talk)
