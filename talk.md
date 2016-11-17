@@ -354,6 +354,39 @@ This is at least an improvement over Go, which refuses to add support for this.
 
 ---
 
+# Regular expressions
+
+```purescript
+# wrongParseInt :: String -> Int
+# betterParseInt :: String -> Maybe Int
+
+data Parsed a = Error String | Result a String  -- rest of the string
+parseInt :: String -> Parsed Int
+```
+
+---
+
+# Regular expressions
+
+```purescript
+space :: String -> Parsed Unit
+space str = case splitAt 1 str of
+                (Just [' ', rest]) -> Result unit rest
+                Nothing            -> Error "Expected a space"
+```
+
+---
+
+# Regular expressions
+
+```purescript
+(>>=) :: Parsed a -> (a -> Parsed b) -> Parsed b
+(Error e)     >>= _ = Error e
+Result a rest >>= f = f rest
+```
+
+---
+
 # Further reading
 
 * [http://www.purescript.org/](http://www.purescript.org/)
