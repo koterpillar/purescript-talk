@@ -6,7 +6,9 @@
 
 ---
 
-# Types
+# Strongly typed
+
+WAT
 
 ???
 
@@ -17,7 +19,7 @@ program. They serve as tests and documentation.
 
 # Types in JavaScript
 
-```
+```javascript
 > typeof(1)
 'number'
 > typeof("asdf")
@@ -30,7 +32,7 @@ NaN
 
 # Types in Python
 
-```
+```python
 >>> type(1)
 <class 'int'>
 >>> type("asdf")
@@ -60,13 +62,13 @@ Pylint finds nothing wrong with `+` or `-`; Mypy complains.
 
 # Types of functions
 
-```
+```javascript
 function dbl(x) {
   return x + x;
 }
 ```
 
-```
+```javascript
 function first_matching(f, x) {
   for (var o in x) {
     if (f(o)) {
@@ -85,7 +87,7 @@ The type of the functions is related to the acceptable types of parameters.
 
 # Complex types
 
-```
+```javascript
 var user : {name: string, email: email} = {
 
   name: "Alice",
@@ -93,7 +95,7 @@ var user : {name: string, email: email} = {
 };
 ```
 
-```
+```javascript
 if (user === 'ANONYMOUS') {
   document.title = "Welcome!";
 } else {
@@ -111,11 +113,11 @@ are often overlooked.
 
 # Side effects
 
-```
+```javascript
 function not(x: boolean): boolean { ... }
 ```
 
-```
+```javascript
 function addUser(is_admin: boolean): boolean { ... }
 ```
 
@@ -135,7 +137,7 @@ in other modules, and throwing exceptions.
 
 # PureScript types
 
-```
+```purescript
 > :type 2
 Int
 > :type "asdf"
@@ -158,7 +160,7 @@ for more information, or to contribute content related to this error.
 
 # Complex types
 
-```
+```purescript
 > :type [1, 2, 4]
 Array Int
 > :type [1, false]
@@ -172,7 +174,7 @@ Could not match type Int with type Boolean
 
 # Functions and their types
 
-```
+```purescript
 > let diagonal w h = sqrt (w * w + h * h)
 > :t diagonal
 Number -> Number -> Number
@@ -191,7 +193,7 @@ currying).
 
 # More function types
 
-```
+```purescript
 > let both f x y = f x && f y
 > :t both
 forall a. (a -> Boolean) -> a -> a -> Boolean
@@ -206,14 +208,14 @@ false
 
 # Sum types
 
-```
+```purescript
 data User = Anonymous | LoggedIn { name :: String, email :: String }
 
-heading Anonymous = "Welcome!"
+heading Anonymous       = "Welcome!"
 heading (LoggedIn user) = "Welcome, " <> user.name <> "!"
 ```
 
-```
+```purescript
 > let alice = LoggedIn { name: "Alice", email: "alice@example.com" }
 > heading alice
 "Welcome, Alice!"
