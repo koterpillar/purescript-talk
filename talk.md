@@ -261,3 +261,100 @@ PureScript modules are compiled to CommonJS modules, with all functions
 transparently exported. The compiled code is very close to the source, and stays
 readable. Thanks to static analysis made possible by purity, all unneeded
 functions are eliminated, resulting in no overhead for distributing PureScript.
+
+---
+
+# Maybe
+
+```purescript
+data User = Anonymous | LoggedIn { name :: String, email :: String }
+
+getName :: User -> String
+```
+
+???
+
+This is impossible to write for all Users.
+
+---
+
+# Maybe
+
+
+```purescript
+data Maybe a = Nothing | Just a
+
+getName :: User -> Maybe String
+getName Anonymous       = Nothing
+getName (LoggedIn user) = Just user.name
+```
+
+???
+
+`Maybe` is a parametrised data type. For example, `Maybe Int` is either an `Int`
+or `Nothing`, and so on. But this isn't very exciting.
+
+---
+
+# Maybe
+
+```purescript
+data User = Anonymous
+          | LoggedIn { name :: String, email :: String, address :: Address }
+data Address = POBox { number :: Int }
+             | StreetAddress { city :: String, street :: String }
+
+# wrongGetUserCity :: User -> City
+getUserCity :: User -> Maybe City
+```
+
+---
+
+# Maybe
+
+```purescript
+data Address = POBox { number :: Int }
+             | StreetAddress { city :: String, street :: String }
+             
+getAddress :: User -> Maybe Address
+getAddress Anonymous       = Nothing
+getAddress (LoggedIn user) = Just user.address
+
+getCity :: Address -> Maybe City
+getCity (POBox _)            = Nothing
+getCity (StreetAddress addr) = Just addr.street
+
+getUserCity :: User -> Maybe City
+getUserCity user = getCity (getAddress user)
+
+# Could not match type Maybe Int with type Int
+```
+
+???
+
+Looks like the price to pay for type safety is too high, and then it still
+doesn't work...
+
+---
+
+# Maybe
+
+```purescript
+(>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+Nothing  >>= _ = Nothing
+(Just a) >>= f = f a
+
+getUserCity user = getAddress user >>= getCity
+```
+
+???
+
+Now we can chain arbitrary operations that might or might not return a result.
+This is at least an improvement over Go, which refuses to add support for this.
+
+---
+
+# Further reading
+
+* [http://www.purescript.org/](http://www.purescript.org/)
+* [https://leanpub.com/purescript/read](https://leanpub.com/purescript/read)
